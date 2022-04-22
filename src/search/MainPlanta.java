@@ -15,6 +15,7 @@ public static void main(String[] args) {
     Ambiente ambiente = new Ambiente();
 
     SearchBasedAgentSimulator simulador = new SearchBasedAgentSimulator(ambiente, planta);
+  
     simulador.start();
     
 }
