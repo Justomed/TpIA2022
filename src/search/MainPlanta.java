@@ -16,6 +16,7 @@ public static void main(String[] args) {
 
     SearchBasedAgentSimulator simulador = new SearchBasedAgentSimulator(ambiente, planta);
     simulador.start();
+    
 }
 	
 
