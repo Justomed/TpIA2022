@@ -26,6 +26,7 @@ public class irDerecha extends SearchAction {
 		if( xAux>-1 && xAux<9 && !estado.getZombies().containsKey(punto)  ) {
 			//Actualizamos la posicion
 			estado.setPosicion(punto);
+			estado.setMatarZombie(1);
 	
 			//Si estamos en la posicion de un girasol y el girasol tiene mas de un sol entonces 
 			//Le sumamos esa energia al agente
@@ -69,7 +70,7 @@ public class irDerecha extends SearchAction {
 		    	ambiente.setEnergiaPlanta(energiaActual-costoZombie);
 		    	
 		    	//CONTEMPLAR DESPUES QUE EN LA POSICION 1 1 NO HAYA NINGUN ZOMBIE
-		    	ambiente.setPosicionPlanta(new Point(1,1));
+		    	ambiente.setPosicionPlanta(new Point(0,0));
 		    }
 		   
 		
@@ -91,6 +92,28 @@ public class irDerecha extends SearchAction {
 		
 			}
 		    	
+	//IF AUXILIAR
+		    	
+//
+//		    	if(planta.getPosicion().distance(new Point(0,4))==1.0) {
+//		    		planta.setObjAux(new Point(6,2));
+//		    	}
+//		    	else if(planta.getPosicion().distance(new Point(0,0))==1.0) {
+//		    		planta.setObjAux(new Point(0,4));	
+//		    	}
+//		    	else if(planta.getPosicion().distance(new Point(6,2))==1.0) {
+//		    		planta.setObjAux(new Point(0,0));	
+//		    	}
+//		    	
+		    	if(planta.getPosicion().equals(new Point(0,4))) {
+		    		planta.setObjAux(new Point(0,0));
+		    	}
+		    	else if(planta.getPosicion().equals(new Point(0,0))) {
+		    		planta.setObjAux(new Point(0,4));	
+		    	}
+//		    	
+		    //	planta.setObjAux(ambiente.obtenerObjetivo(planta.getPosicion()));
+		    	
 		    }
 		 
 		
@@ -100,7 +123,9 @@ public class irDerecha extends SearchAction {
 		
 		
 		return ambiente;
-
+		
+		
+		
 	}
 
 	@Override

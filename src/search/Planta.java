@@ -10,11 +10,13 @@ import frsf.cidisi.faia.agent.search.Problem;
 import frsf.cidisi.faia.agent.search.SearchAction;
 import frsf.cidisi.faia.agent.search.SearchBasedAgent;
 import frsf.cidisi.faia.solver.search.BreathFirstSearch;
+import frsf.cidisi.faia.solver.search.DepthFirstSearch;
 import frsf.cidisi.faia.solver.search.Search;
 import search.action.PelearAbajo;
 import search.action.PelearArriba;
 import search.action.PelearDerecha;
 import search.action.PelearIzquierda;
+import search.action.Plantar;
 import search.action.irAbajo;
 import search.action.irArriba;
 import search.action.irDerecha;
@@ -46,7 +48,7 @@ public class Planta extends SearchBasedAgent {
 	     acciones.addElement(new PelearArriba());
 	     acciones.addElement(new PelearIzquierda());
 	     acciones.addElement(new PelearDerecha());
-	     //acciones.addElement(new Plantar());
+	     acciones.addElement(new Plantar());
 	     
 	     Problem problema =new Problem(objetivo,estado,acciones);
 	     

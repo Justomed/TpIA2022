@@ -12,8 +12,10 @@ public class ObjetivoPlanta extends GoalTest {
 		
 		EstadoPlanta planta= (EstadoPlanta) agentState;
 				
-		
-		if(planta.getPosicion().equals(new Point(8,4)) && planta.getZombies().isEmpty())   {
+	
+		if((planta.getPosicion().equals(planta.getObjAux()) 
+				&& planta.getZombies().isEmpty() && planta.getGirasoles().size()>=5)|| planta.getCantidadZombies()==0
+				|| planta.getMatarZombie()==0)   {
 			return true;
 		}
 		

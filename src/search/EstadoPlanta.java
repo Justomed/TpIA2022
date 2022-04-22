@@ -2,6 +2,7 @@ package search;
 
 import java.awt.Point;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import entidades.Zombie;
 import frsf.cidisi.faia.agent.Perception;
@@ -13,12 +14,18 @@ public class EstadoPlanta extends SearchBasedAgentState {
 	private HashMap<Point, Integer> girasoles;
 	private HashMap<Point, Zombie> zombies;
 	private Integer cantidadZombies;
+	private Integer matarZombie;
 	private Integer energia;
+	private Point objAux;
+
+
+
 
 	public EstadoPlanta() {
 
 		initState();
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -27,11 +34,16 @@ public class EstadoPlanta extends SearchBasedAgentState {
 
 		EstadoPlanta planta = (EstadoPlanta) obj;
 
-		if (this.getCantidadZombies() == planta.getCantidadZombies() && this.getEnergia() == planta.getEnergia()
-				&& this.getPosicion().equals(planta.posicion) && this.getZombies().equals(planta.getZombies())
-				&& this.getGirasoles().equals(planta.getGirasoles())) {
-			return true;
-
+		if (this.getCantidadZombies() == planta.getCantidadZombies() 
+				&& this.getPosicion().equals(planta.getPosicion()) 
+				&& this.getZombies().size()==planta.getZombies().size() 
+				&& this.getGirasoles().size()== planta.getGirasoles().size()  
+				&& this.getObjAux().equals(planta.getObjAux()) 
+				&& this.getMatarZombie().equals(planta.getMatarZombie())
+				&& this.getEnergia().equals(planta.getEnergia()))
+				 {
+		return true;
+			
 		}
 
 		return false;
@@ -39,36 +51,45 @@ public class EstadoPlanta extends SearchBasedAgentState {
 
 	@Override
 	public SearchBasedAgentState clone() {
-
-		EstadoPlanta nuevoEstado = new EstadoPlanta();
-
+		
+		EstadoPlanta nuevoEstado= new EstadoPlanta();
+		
 		nuevoEstado.setCantidadZombies(this.getCantidadZombies());
 		nuevoEstado.setEnergia(this.getEnergia());
-		nuevoEstado.setPosicion(new Point(this.getPosicion().x, this.getPosicion().y));
-
-		HashMap<Point, Zombie> zombies = new HashMap<Point, Zombie>();
-		HashMap<Point, Integer> girasoles = new HashMap<Point, Integer>();
-		this.getZombies().forEach((k, v) -> {
-
-			Zombie z = new Zombie(v.getId(), v.getEnergia(), v.getContador());
-			Point p = new Point(k.x, k.y);
-
+		nuevoEstado.setPosicion(new Point(this.getPosicion().x,this.getPosicion().y));
+		nuevoEstado.setObjAux(new Point(this.getObjAux().x,this.getObjAux().y));
+		nuevoEstado.setMatarZombie(this.getMatarZombie());
+		HashMap <Point,Zombie> zombies= new HashMap();
+		HashMap <Point,Integer> girasoles= new HashMap();
+		this.getZombies().forEach((k,v)->{
+			
+			Zombie z= new Zombie(v.getId(),v.getEnergia(),v.getContador());
+			Point p= new Point(k.x,k.y);
+			
 			zombies.put(p, z);
-
+			
+			
+			
 		});
-
-		this.getGirasoles().forEach((k, v) -> {
-			Point p = new Point(k.x, k.y);
-
-			girasoles.put(p, v);
-
-		});
-
+	
+		
+		this.getGirasoles().forEach((k,v)->{
+			Point p= new Point(k.x,k.y);
+			
+				girasoles.put(p, v);
+			
+					});
+		
+		
+		
+		
 		nuevoEstado.setZombies(zombies);
 		nuevoEstado.setGirasoles(girasoles);
 
-		return nuevoEstado;
 
+	
+		return nuevoEstado;
+		
 	}
 
 	@Override
@@ -79,25 +100,20 @@ public class EstadoPlanta extends SearchBasedAgentState {
 		this.setGirasoles(percepcion.getGirasoles());
 		this.setCantidadZombies(percepcion.getCantidadZombies());
 		this.setEnergia(percepcion.getEnergiaPlanta());
-
-		percepcion.getZombies().forEach((k, v) -> {
-			if (this.getZombies().containsValue(v)) {
-				eliminarZombie(v);
-			} // lo elimino para despues agregarlo de nuevo con el nuevo punto
-			this.getZombies().put(k, v);
-		});
+		this.setZombies(percepcion.getZombies());
+	
 
 	}
 
 	private void eliminarZombie(Zombie zombie) {
 
-		Point punto = new Point();
-
+		Point punto=new Point();
+		
 		this.getZombies().forEach((k, v) -> {
 
 			if (v.equals(zombie)) {
 
-				punto.setLocation(k.x, k.y);
+				punto.setLocation(k.x,k.y);
 
 			}
 		});
@@ -109,19 +125,23 @@ public class EstadoPlanta extends SearchBasedAgentState {
 	public String toString() {
 		// TODO Auto-generated method stub
 		return "Posicion Actual: " + this.getPosicion().getX() + ";" + this.getPosicion().getY() + "\n"
-				+ " Cantidad de zombies: " + this.getCantidadZombies() + "\n" + " Energía: " + this.getEnergia() + "\n "
-				+
-
-				"Zombies:" + this.getZombies() + "\n " + "Girasoles: " + this.getGirasoles();
-
+				+ " Cantidad de zombies: " + this.getCantidadZombies() + "\n" + " Energía: " + this.getEnergia()
+				+ "\n "+
+				
+				"Zombies:" + this.getZombies() + "\n "+
+				"Girasoles: " + this.getGirasoles()+ "\n "+
+				"Objetivo actual-> " + this.getObjAux().x + " : "+ this.getObjAux().y ;
+	
 	}
 
 	@Override
 	public void initState() {
-		posicion = new Point(2, 2);
+
 		girasoles = new HashMap<Point, Integer>();
 		zombies = new HashMap<Point, Zombie>();
-
+		objAux=new Point(0,4);
+		matarZombie=1;
+	
 	}
 
 	public Point getPosicion() {
@@ -163,5 +183,30 @@ public class EstadoPlanta extends SearchBasedAgentState {
 	public void setEnergia(Integer energia) {
 		this.energia = energia;
 	}
+
+
+	public Point getObjAux() {
+		return objAux;
+	}
+
+
+	public void setObjAux(Point objAux) {
+		this.objAux = objAux;
+	}
+
+
+	public Integer getMatarZombie() {
+		return matarZombie;
+	}
+
+
+	public void setMatarZombie(Integer matarZombie) {
+		this.matarZombie = matarZombie;
+	}
+
+
+
+
+	
 
 }

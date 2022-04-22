@@ -11,20 +11,26 @@ import search.EstadoPlanta;
 
 public class Plantar extends SearchAction {
 
+
+	
 	@Override
 	public SearchBasedAgentState execute(SearchBasedAgentState s) {
+		
+		EstadoPlanta planta= (EstadoPlanta)s;
+		
+		Point punto= new Point(planta.getPosicion().x,planta.getPosicion().y);
 
-		EstadoPlanta planta = (EstadoPlanta) s;
-
-		Point punto = new Point(planta.getPosicion().x, planta.getPosicion().y);
-
-		if (!planta.getGirasoles().containsKey(punto) && planta.getEnergia() > 1) {
-
+		if(!planta.getGirasoles().containsKey(punto) && planta.getEnergia()>1 ) {
+			
 			planta.getGirasoles().put(punto, 0);
-			planta.setEnergia(planta.getEnergia() - 1);
-
+			planta.setEnergia(planta.getEnergia()-1);
+		
+				
 		}
-
+	
+		
+	
+		
 		return planta;
 	}
 
@@ -36,21 +42,22 @@ public class Plantar extends SearchAction {
 
 	@Override
 	public EnvironmentState execute(AgentState ast, EnvironmentState est) {
+	    
+		EstadoPlanta planta= (EstadoPlanta)ast;
+		EstadoAmbiente ambiente =(EstadoAmbiente) est;
 
-		EstadoPlanta planta = (EstadoPlanta) ast;
-		EstadoAmbiente ambiente = (EstadoAmbiente) est;
+		Point punto= new Point(ambiente.getPosicionPlanta().x,ambiente.getPosicionPlanta().y);
 
-		Point punto = new Point(ambiente.getPosicionPlanta().x, ambiente.getPosicionPlanta().y);
-
-		if (!ambiente.getGirasoles().containsKey(punto) && ambiente.getEnergiaPlanta() > 1) {
-
+		if(!ambiente.getGirasoles().containsKey(punto) && ambiente.getEnergiaPlanta()>1) {
+			
 			ambiente.getGirasoles().put(punto, 0);
-			ambiente.setEnergiaPlanta(ambiente.getEnergiaPlanta() - 1);
+			ambiente.setEnergiaPlanta(ambiente.getEnergiaPlanta()-1);
 			planta.getGirasoles().put(punto, 0);
-			planta.setEnergia(ambiente.getEnergiaPlanta() - 1);
-
+			planta.setEnergia(ambiente.getEnergiaPlanta()-1);
+		
+			
 		}
-
+				
 		return ambiente;
 	}
 

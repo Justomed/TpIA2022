@@ -1,9 +1,13 @@
 package search;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import entidades.Girasol;
 import entidades.Zombie;
+import enumeradores.Celda;
+import frsf.cidisi.faia.agent.Action;
 import frsf.cidisi.faia.state.EnvironmentState;
 
 public class EstadoAmbiente extends EnvironmentState {
@@ -24,8 +28,8 @@ public class EstadoAmbiente extends EnvironmentState {
 	@Override
 	public void initState() {
 
-		setEnergiaPlanta(20);
-		posicionPlanta = new Point(2, 2);
+		setEnergiaPlanta(numeroAleatorio(5, 20));
+		posicionPlanta = new Point(0, 0);
 
 		zombies = new HashMap<>(); // crear zombies y posiciones
 		crearZombies(zombies);
@@ -37,14 +41,14 @@ public class EstadoAmbiente extends EnvironmentState {
 
 	private void crearZombies(HashMap<Point, Zombie> zombies) {
 
-		cantidadZombies = 1; // numeroAleatorio(5,20); // un random
+		cantidadZombies = numeroAleatorio(2, 10); // un random
 
 		for (int i = 0; i < cantidadZombies; i++) {
 
 			Point punto = new Point();
 			do {
-				punto.setLocation(7, 4);// (numeroAleatorio(10,15),numeroAleatorio(0,4)); //punto aleatorio en la matriz
-										// del lado no visible
+				punto.setLocation(numeroAleatorio(15, 40), numeroAleatorio(0, 4)); // punto aleatorio en la matriz del
+																					// lado no visible
 
 			} while (zombies.containsKey(punto));// CONTROLA QUE NO HAYA PUNTOS REPETIDOS
 
@@ -54,9 +58,6 @@ public class EstadoAmbiente extends EnvironmentState {
 			zombies.put(punto, zombie);
 
 		}
-		zombies.put(new Point(0, 4), new Zombie(1, 3, 1));
-		zombies.put(new Point(1, 0), new Zombie(2, 3, 1));
-		zombies.put(new Point(7, 1), new Zombie(3, 3, 1));
 
 	}
 
@@ -105,50 +106,40 @@ public class EstadoAmbiente extends EnvironmentState {
 //	}
 
 // como se van a ir moviendo los zombies
-	public void actualizarZombies() {
+	public HashMap<Point, Zombie> actualizarZombies() {
+
+		HashMap<Point, Zombie> actualizacion = new HashMap<>();
 
 		this.getZombies().forEach((k, v) -> {
+			// FALTA CONTEMPLAR SI PISA UN GIRASOL,OTRO ZOMBIE O EL AGENTE
 
-			Integer aux = v.getContador() - 1;
+			Zombie nuevoZombie = new Zombie(v.getId(), v.getEnergia(), v.getContador() - 1);
+			Point nuevoPunto = new Point(k.x, k.y);
 
-			// si el contador es igual a 0 y la siguiente posicion no esta ocupada, el
-			// zombie avanza
-			if (aux == 0 && !this.getZombies().containsKey(new Point(k.x - 1, k.y))) {
-				k.setLocation(k.x - 1, k.y);
-				v.setContador(numeroAleatorio(1, 3));// volvemos a setear contador
+			if (nuevoZombie.getContador() == 0) {
 
-				// Ver si el zombie queda en la posicion de un girasol o el agente
-
-				if (this.getGirasoles().containsKey(k)) {
-					// elimino el girasol
-					this.getGirasoles().remove(k);
-				}
-				if (this.getPosicionPlanta().equals(k)) {
-
-					// Le saco la energia al agente y lo envio al principio del mapa
-					this.setPosicionPlanta(new Point(1, 1));// REEVER
-					Integer energiaPlanta = this.getEnergiaPlanta();
-					Integer energiaZombie = v.getEnergia() * 2;
-
-					this.setEnergiaPlanta(energiaPlanta - energiaZombie);
-
-				} else if (k.x == 0) {
-					zombieLlego = true;
+				if (!this.getZombies().containsKey(new Point(k.x - 1, k.y))) {
+					nuevoPunto.setLocation(k.x - 1, k.y);
 				}
 
-			}
-			// si el contador llega a 0 y la siguiente posicion esta ocupada
-			else if (aux == 0) {
-				v.setContador(numeroAleatorio(1, 3));// volvemos a setear el contador sin que el zombie avance
-			}
-			// si el contador todavia no llega a 0
-			else {
-
-				v.setContador(v.getContador() - 1);// disminuimos el contador en uno
-
+				nuevoZombie.setContador(numeroAleatorio(1, 5));
 			}
 
-		});
+			if (nuevoPunto.x == 0) {
+				zombieLlego = true;
+			}
+			if (this.getGirasoles().containsKey(nuevoPunto)) {
+
+				this.getGirasoles().remove(nuevoPunto);
+			}
+
+			actualizacion.put(nuevoPunto, nuevoZombie);
+
+		}
+
+		);
+
+		return actualizacion;
 
 	}
 
@@ -162,6 +153,55 @@ public class EstadoAmbiente extends EnvironmentState {
 			this.getGirasoles().replace(k, v + numeroAleatorio(1, 3));
 
 		});
+
+	}
+
+	public Point obtenerObjetivo(Point puntoActual) {
+
+		Point nuevoPunto = new Point();
+		boolean valido = false;
+		Integer numero;
+
+		while (!valido) {
+
+			numero = numeroAleatorio(1, 4);
+			switch (numero) {
+			case 1:
+				if (puntoActual.x + 1 <= 8) {
+					nuevoPunto.setLocation(puntoActual.x + 1, puntoActual.y);
+					valido=true;
+				}
+				break;
+
+			case 2:
+				if (puntoActual.x - 1 >= 0) {
+
+					nuevoPunto.setLocation(puntoActual.x - 1, puntoActual.y);
+					valido=true;
+				}
+				break;
+
+			case 3:
+				if (puntoActual.y + 1 <= 4) {
+
+					nuevoPunto.setLocation(puntoActual.x, puntoActual.y + 1);
+					valido=true;
+				}
+				break;
+
+			case 4:
+				if (puntoActual.y - 1 >= 0) {
+
+					nuevoPunto.setLocation(puntoActual.x, puntoActual.y -1);
+					valido=true;
+				}
+				break;
+
+			}
+
+		}
+
+		return nuevoPunto;
 
 	}
 
