@@ -31,8 +31,11 @@ public class PelearIzquierda extends SearchAction {
 			
 			planta.setEnergia(energia-planta.getZombies().get(punto).getEnergia());
 			planta.getZombies().remove(punto);
-			planta.setCantidadZombies(planta.getCantidadZombies()-1);
-			planta.setMatarZombie(0);
+			//--IMPORTANTE--
+			planta.setCantidadZombies(0);
+			//-------------
+//			planta.setCantidadZombies(planta.getCantidadZombies()-1);
+//			planta.setMatarZombie(0);
 			
 		}
 		
@@ -43,7 +46,7 @@ public class PelearIzquierda extends SearchAction {
 	@Override
 	public Double getCost() {
 		
-		return 1.0;
+		return 0.0;
 	}
 
 	@Override
@@ -70,7 +73,7 @@ public class PelearIzquierda extends SearchAction {
 			ambiente.setCantidadZombies(ambiente.getCantidadZombies()-1);
 		
 		     
-			planta.setMatarZombie(1);
+		//	planta.setMatarZombie(1);
 			ambiente.getZombies().remove(punto);
 			
 		}

@@ -14,7 +14,6 @@ public class EstadoPlanta extends SearchBasedAgentState {
 	private HashMap<Point, Integer> girasoles;
 	private HashMap<Point, Zombie> zombies;
 	private Integer cantidadZombies;
-	private Integer matarZombie;
 	private Integer energia;
 	private Point objAux;
 
@@ -39,7 +38,6 @@ public class EstadoPlanta extends SearchBasedAgentState {
 				&& this.getZombies().size()==planta.getZombies().size() 
 				&& this.getGirasoles().size()== planta.getGirasoles().size()  
 				&& this.getObjAux().equals(planta.getObjAux()) 
-				&& this.getMatarZombie().equals(planta.getMatarZombie())
 				&& this.getEnergia().equals(planta.getEnergia()))
 				 {
 		return true;
@@ -58,7 +56,6 @@ public class EstadoPlanta extends SearchBasedAgentState {
 		nuevoEstado.setEnergia(this.getEnergia());
 		nuevoEstado.setPosicion(new Point(this.getPosicion().x,this.getPosicion().y));
 		nuevoEstado.setObjAux(new Point(this.getObjAux().x,this.getObjAux().y));
-		nuevoEstado.setMatarZombie(this.getMatarZombie());
 		HashMap <Point,Zombie> zombies= new HashMap();
 		HashMap <Point,Integer> girasoles= new HashMap();
 		this.getZombies().forEach((k,v)->{
@@ -140,7 +137,6 @@ public class EstadoPlanta extends SearchBasedAgentState {
 		girasoles = new HashMap<Point, Integer>();
 		zombies = new HashMap<Point, Zombie>();
 		objAux=new Point(0,4);
-		matarZombie=1;
 	
 	}
 
@@ -194,15 +190,6 @@ public class EstadoPlanta extends SearchBasedAgentState {
 		this.objAux = objAux;
 	}
 
-
-	public Integer getMatarZombie() {
-		return matarZombie;
-	}
-
-
-	public void setMatarZombie(Integer matarZombie) {
-		this.matarZombie = matarZombie;
-	}
 
 
 

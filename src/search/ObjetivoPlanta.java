@@ -14,8 +14,8 @@ public class ObjetivoPlanta extends GoalTest {
 				
 	
 		if((planta.getPosicion().equals(planta.getObjAux()) 
-				&& planta.getZombies().isEmpty() && planta.getGirasoles().size()>=5)|| planta.getCantidadZombies()==0
-				|| planta.getMatarZombie()==0)   {
+				&& planta.getZombies().isEmpty() )//&& planta.getGirasoles().size()>=5)
+				|| planta.getCantidadZombies()==0) {
 			return true;
 		}
 		

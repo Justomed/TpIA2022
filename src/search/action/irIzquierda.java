@@ -27,7 +27,6 @@ public class irIzquierda extends SearchAction {
 		
 			//Actualizamos la posicion
 			estado.setPosicion(punto);
-			estado.setMatarZombie(1);
 			//Si estamos en la posicion de un girasol y el girasol tiene mas de un sol entonces 
 			//Le sumamos esa energia al agente
 			if(estado.getGirasoles().containsKey(punto) && estado.getGirasoles().get(punto)>0) {

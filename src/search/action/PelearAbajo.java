@@ -31,8 +31,12 @@ public class PelearAbajo extends SearchAction {
 			
 			planta.setEnergia(energia-planta.getZombies().get(punto).getEnergia());
 			planta.getZombies().remove(punto);
-			planta.setCantidadZombies(planta.getCantidadZombies()-1);
-			planta.setMatarZombie(0);
+			
+			//--IMPORTANTE--
+			planta.setCantidadZombies(0);
+			//-------------
+			//planta.setCantidadZombies(planta.getCantidadZombies()-1);
+			//planta.setMatarZombie(0);
 			
 		}
 		
@@ -43,7 +47,7 @@ public class PelearAbajo extends SearchAction {
 	@Override
 	public Double getCost() {
 		// TODO Auto-generated method stub
-		return 1.0;
+		return 0.0;
 	}
 
 	@Override
@@ -69,7 +73,7 @@ public class PelearAbajo extends SearchAction {
 			
 			ambiente.setCantidadZombies(ambiente.getCantidadZombies()-1);
 
-			planta.setMatarZombie(1);
+			//planta.setMatarZombie(1);
 			ambiente.getZombies().remove(punto);
 			
 		}

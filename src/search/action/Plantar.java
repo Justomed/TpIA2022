@@ -11,7 +11,7 @@ import search.EstadoPlanta;
 
 public class Plantar extends SearchAction {
 
-
+   private Double cost=1.1;
 	
 	@Override
 	public SearchBasedAgentState execute(SearchBasedAgentState s) {
@@ -22,9 +22,21 @@ public class Plantar extends SearchAction {
 
 		if(!planta.getGirasoles().containsKey(punto) && planta.getEnergia()>1 ) {
 			
-			planta.getGirasoles().put(punto, 0);
+			
+			
+			
+			planta.getGirasoles().put(punto, 3);
 			planta.setEnergia(planta.getEnergia()-1);
 		
+			if(planta.getGirasoles().size()>5) {
+				cost=100.0;
+				
+			}else {
+				
+				cost=-1.0;
+			}
+			
+			
 				
 		}
 	
@@ -36,8 +48,10 @@ public class Plantar extends SearchAction {
 
 	@Override
 	public Double getCost() {
+	
+		
 		// TODO Auto-generated method stub
-		return 1.0;
+		return cost;
 	}
 
 	@Override

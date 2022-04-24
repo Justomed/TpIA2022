@@ -3,16 +3,13 @@ package search;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import entidades.Girasol;
 import entidades.Zombie;
-import enumeradores.Celda;
 import frsf.cidisi.faia.agent.Action;
 import frsf.cidisi.faia.state.EnvironmentState;
 
 public class EstadoAmbiente extends EnvironmentState {
 
-	// private Celda[][] grilla; // se va a ir actulizado para verlo por la interfaz
+	
 	private Integer energiaPlanta;
 	private Point posicionPlanta;
 	private HashMap<Point, Zombie> zombies; // En el point se guarda la posicion del zombie
@@ -28,7 +25,7 @@ public class EstadoAmbiente extends EnvironmentState {
 	@Override
 	public void initState() {
 
-		setEnergiaPlanta(numeroAleatorio(5, 20));
+		setEnergiaPlanta(numeroAleatorio(2, 20));
 		posicionPlanta = new Point(0, 0);
 
 		zombies = new HashMap<>(); // crear zombies y posiciones
@@ -41,7 +38,7 @@ public class EstadoAmbiente extends EnvironmentState {
 
 	private void crearZombies(HashMap<Point, Zombie> zombies) {
 
-		cantidadZombies = numeroAleatorio(2, 10); // un random
+		cantidadZombies = numeroAleatorio(2, 20); // un random
 
 		for (int i = 0; i < cantidadZombies; i++) {
 
@@ -122,7 +119,7 @@ public class EstadoAmbiente extends EnvironmentState {
 					nuevoPunto.setLocation(k.x - 1, k.y);
 				}
 
-				nuevoZombie.setContador(numeroAleatorio(1, 5));
+				nuevoZombie.setContador(numeroAleatorio(1, 4));
 			}
 
 			if (nuevoPunto.x == 0) {

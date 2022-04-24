@@ -4,18 +4,22 @@ import java.awt.Point;
 import java.util.HashMap;
 
 import entidades.Zombie;
-import enumeradores.Celda;
 import frsf.cidisi.faia.agent.Action;
 import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.environment.Environment;
+import interfaces.Ventana;
 
 public class Ambiente extends Environment {
 
 	
+	private Ventana ventana;
 	
 	public Ambiente() {
 		
 		this.environmentState= new EstadoAmbiente();
+		
+		ventana= new Ventana(this.getEstadoAmbiente());
+		ventana.setVisible(true);
 	
 	}
 	
@@ -36,7 +40,7 @@ public class Ambiente extends Environment {
 		this.getEstadoAmbiente().setZombies(this.getEstadoAmbiente().actualizarZombies());
 		
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -76,6 +80,11 @@ public class Ambiente extends Environment {
 		perception.setGirasoles(this.getEstadoAmbiente().getGirasoles());
 		perception.setCantidadZombies(this.getEstadoAmbiente().getCantidadZombies());
 		perception.setEnergiaPlanta(this.getEstadoAmbiente().getEnergiaPlanta());
+		
+
+
+		ventana.actualizar(this.getEstadoAmbiente());
+		ventana.repaint();
 		return perception;
 	}
 	

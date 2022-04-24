@@ -12,6 +12,7 @@ import frsf.cidisi.faia.agent.search.SearchBasedAgent;
 import frsf.cidisi.faia.solver.search.BreathFirstSearch;
 import frsf.cidisi.faia.solver.search.DepthFirstSearch;
 import frsf.cidisi.faia.solver.search.Search;
+import frsf.cidisi.faia.solver.search.UniformCostSearch;
 import search.action.PelearAbajo;
 import search.action.PelearArriba;
 import search.action.PelearDerecha;
@@ -39,16 +40,17 @@ public class Planta extends SearchBasedAgent {
 		this.setAgentState(estado);
 		
 	     Vector<SearchAction> acciones = new Vector<SearchAction>();
-	     
+	     acciones.addElement(new Plantar());
 	     acciones.addElement(new irAbajo());
 	     acciones.addElement(new irArriba());
 	     acciones.addElement(new irIzquierda());
 	     acciones.addElement(new irDerecha());
+	     
 	     acciones.addElement(new PelearAbajo());
 	     acciones.addElement(new PelearArriba());
 	     acciones.addElement(new PelearIzquierda());
 	     acciones.addElement(new PelearDerecha());
-	     acciones.addElement(new Plantar());
+	
 	     
 	     Problem problema =new Problem(objetivo,estado,acciones);
 	     
@@ -69,12 +71,11 @@ public class Planta extends SearchBasedAgent {
 	@Override
 	public Action selectAction() {
 	
-		//???????????????? copie y pegue
 		
-		  BreathFirstSearch estrategia = new BreathFirstSearch ();
-		
+		 //BreathFirstSearch estrategia = new BreathFirstSearch ();
+         UniformCostSearch estrategia= new UniformCostSearch(new CostFunction());
 		  Search searchSolver = new Search(estrategia);
-		
+		 
 		 // searchSolver.setVisibleTree(Search.XML_TREE);
 		  
 		   this.setSolver(searchSolver);
