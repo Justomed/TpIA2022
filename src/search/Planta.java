@@ -9,8 +9,11 @@ import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.agent.search.Problem;
 import frsf.cidisi.faia.agent.search.SearchAction;
 import frsf.cidisi.faia.agent.search.SearchBasedAgent;
+import frsf.cidisi.faia.solver.search.AStarSearch;
 import frsf.cidisi.faia.solver.search.BreathFirstSearch;
 import frsf.cidisi.faia.solver.search.DepthFirstSearch;
+import frsf.cidisi.faia.solver.search.IEstimatedCostFunction;
+import frsf.cidisi.faia.solver.search.IStepCostFunction;
 import frsf.cidisi.faia.solver.search.Search;
 import frsf.cidisi.faia.solver.search.UniformCostSearch;
 import search.action.PelearAbajo;
@@ -41,10 +44,11 @@ public class Planta extends SearchBasedAgent {
 		
 	     Vector<SearchAction> acciones = new Vector<SearchAction>();
 	     acciones.addElement(new Plantar());
-	     acciones.addElement(new irAbajo());
-	     acciones.addElement(new irArriba());
 	     acciones.addElement(new irIzquierda());
 	     acciones.addElement(new irDerecha());
+	     acciones.addElement(new irAbajo());
+	     acciones.addElement(new irArriba());
+	  
 	     
 	     acciones.addElement(new PelearAbajo());
 	     acciones.addElement(new PelearArriba());
@@ -72,11 +76,13 @@ public class Planta extends SearchBasedAgent {
 	public Action selectAction() {
 	
 		
-		 //BreathFirstSearch estrategia = new BreathFirstSearch ();
-         UniformCostSearch estrategia= new UniformCostSearch(new CostFunction());
-		  Search searchSolver = new Search(estrategia);
+		//BreathFirstSearch estrategia = new BreathFirstSearch ();
+        //UniformCostSearch estrategia= new UniformCostSearch(new CostFunction());
+       AStarSearch estrategia = new AStarSearch(new CostFunction(), new Heuristic());
+		
+		Search searchSolver = new Search(estrategia);
 		 
-		 // searchSolver.setVisibleTree(Search.XML_TREE);
+		  //searchSolver.setVisibleTree(Search.XML_TREE);
 		  
 		   this.setSolver(searchSolver);
 		   

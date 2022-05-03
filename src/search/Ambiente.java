@@ -196,7 +196,7 @@ public class Ambiente extends Environment {
 	@Override
 	 public boolean agentFailed(Action actionReturned) {
 		 
-		 return (this.getEstadoAmbiente().getEnergiaPlanta()<=0 || this.getEstadoAmbiente().isZombieLlego());
+		 return (this.getEstadoAmbiente().getEnergiaPlanta()<=0 ||this.getEstadoAmbiente().sinPosibilidades() || this.getEstadoAmbiente().isZombieLlego());
 	 }
 	
 	@Override

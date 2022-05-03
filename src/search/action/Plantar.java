@@ -25,7 +25,7 @@ public class Plantar extends SearchAction {
 			
 			
 			
-			planta.getGirasoles().put(punto, 3);
+			planta.getGirasoles().put(punto, 6);
 			planta.setEnergia(planta.getEnergia()-1);
 		
 			if(planta.getGirasoles().size()>5) {

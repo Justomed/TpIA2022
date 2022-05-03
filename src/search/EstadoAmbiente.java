@@ -119,7 +119,7 @@ public class EstadoAmbiente extends EnvironmentState {
 					nuevoPunto.setLocation(k.x - 1, k.y);
 				}
 
-				nuevoZombie.setContador(numeroAleatorio(1, 4));
+				nuevoZombie.setContador(numeroAleatorio(1,5));
 			}
 
 			if (nuevoPunto.x == 0) {
@@ -200,6 +200,19 @@ public class EstadoAmbiente extends EnvironmentState {
 
 		return nuevoPunto;
 
+	}
+	
+	public boolean sinPosibilidades() {
+		
+		
+		if(this.getGirasoles().isEmpty() && this.getEnergiaPlanta()==1 && this.getCantidadZombies()>0) {
+			
+			return true;
+		}
+		
+		
+		return false;
+		
 	}
 
 	@Override
