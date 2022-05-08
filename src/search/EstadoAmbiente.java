@@ -1,15 +1,12 @@
 package search;
 
 import java.awt.Point;
-import java.util.ArrayList;
 import java.util.HashMap;
 import entidades.Zombie;
-import frsf.cidisi.faia.agent.Action;
 import frsf.cidisi.faia.state.EnvironmentState;
 
 public class EstadoAmbiente extends EnvironmentState {
 
-	
 	private Integer energiaPlanta;
 	private Point posicionPlanta;
 	private HashMap<Point, Zombie> zombies; // En el point se guarda la posicion del zombie
@@ -19,7 +16,6 @@ public class EstadoAmbiente extends EnvironmentState {
 
 	public EstadoAmbiente() {
 		initState();
-
 	}
 
 	@Override
@@ -58,57 +54,12 @@ public class EstadoAmbiente extends EnvironmentState {
 
 	}
 
-//	private void actualizarGrilla(Celda[][] grilla) {
-//		
-//		// aca se llenaria la grilla con las entidades
-//		// despues nos va a facilitar hacer la interface 
-//		
-//		for(int i=0;i<30;i++) {
-//			
-//			Point punto = new Point();
-//			punto.x=i;
-//			for(int j=0;j<5;j++) {
-//				punto.y=j;
-//				
-//				
-//				if(posicionPlanta.equals(punto)) {
-//					grilla[i][j]= Celda.PLANTA;
-//				}
-//				else if(zombies.containsKey(punto)) {
-//					
-//					grilla[i][j]= Celda.ZOMBIE;
-//					
-//					}
-//				else if(girasoles.containsKey(punto)) {
-//					
-//					if(girasoles.get(punto) >0) { grilla[i][j]= Celda.GIRASOLYSOL;}
-//					else { grilla[i][j]= Celda.GIRASOL;} 
-//				}
-//				else {
-//					grilla[i][j]= Celda.VACIO;
-//				}
-//				
-//				
-//				
-//				
-//			}
-//			
-//			
-//			
-//			
-//		}
-//		
-//		
-//		
-//	}
-
-// como se van a ir moviendo los zombies
+	// como se van a ir moviendo los zombies
 	public HashMap<Point, Zombie> actualizarZombies() {
 
 		HashMap<Point, Zombie> actualizacion = new HashMap<>();
 
 		this.getZombies().forEach((k, v) -> {
-			// FALTA CONTEMPLAR SI PISA UN GIRASOL,OTRO ZOMBIE O EL AGENTE
 
 			Zombie nuevoZombie = new Zombie(v.getId(), v.getEnergia(), v.getContador() - 1);
 			Point nuevoPunto = new Point(k.x, k.y);
@@ -119,7 +70,7 @@ public class EstadoAmbiente extends EnvironmentState {
 					nuevoPunto.setLocation(k.x - 1, k.y);
 				}
 
-				nuevoZombie.setContador(numeroAleatorio(1,5));
+				nuevoZombie.setContador(numeroAleatorio(1, 5));
 			}
 
 			if (nuevoPunto.x == 0) {
@@ -163,36 +114,36 @@ public class EstadoAmbiente extends EnvironmentState {
 
 			numero = numeroAleatorio(1, 4);
 			switch (numero) {
-			case 1:
-				if (puntoActual.x + 1 <= 8) {
-					nuevoPunto.setLocation(puntoActual.x + 1, puntoActual.y);
-					valido=true;
-				}
-				break;
+				case 1:
+					if (puntoActual.x + 1 <= 8) {
+						nuevoPunto.setLocation(puntoActual.x + 1, puntoActual.y);
+						valido = true;
+					}
+					break;
 
-			case 2:
-				if (puntoActual.x - 1 >= 0) {
+				case 2:
+					if (puntoActual.x - 1 >= 0) {
 
-					nuevoPunto.setLocation(puntoActual.x - 1, puntoActual.y);
-					valido=true;
-				}
-				break;
+						nuevoPunto.setLocation(puntoActual.x - 1, puntoActual.y);
+						valido = true;
+					}
+					break;
 
-			case 3:
-				if (puntoActual.y + 1 <= 4) {
+				case 3:
+					if (puntoActual.y + 1 <= 4) {
 
-					nuevoPunto.setLocation(puntoActual.x, puntoActual.y + 1);
-					valido=true;
-				}
-				break;
+						nuevoPunto.setLocation(puntoActual.x, puntoActual.y + 1);
+						valido = true;
+					}
+					break;
 
-			case 4:
-				if (puntoActual.y - 1 >= 0) {
+				case 4:
+					if (puntoActual.y - 1 >= 0) {
 
-					nuevoPunto.setLocation(puntoActual.x, puntoActual.y -1);
-					valido=true;
-				}
-				break;
+						nuevoPunto.setLocation(puntoActual.x, puntoActual.y - 1);
+						valido = true;
+					}
+					break;
 
 			}
 
@@ -201,25 +152,23 @@ public class EstadoAmbiente extends EnvironmentState {
 		return nuevoPunto;
 
 	}
-	
+
 	public boolean sinPosibilidades() {
-		
-		
-		if(this.getGirasoles().isEmpty() && this.getEnergiaPlanta()==1 && this.getCantidadZombies()>0) {
-			
+
+		if (this.getGirasoles().isEmpty() && this.getEnergiaPlanta() == 1 && this.getCantidadZombies() > 0) {
+
 			return true;
 		}
-		
-		
+
 		return false;
-		
+
 	}
 
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
 		return "Posicion Actual: " + this.getPosicionPlanta().x + ";" + this.getPosicionPlanta().y + "\n"
-				+ " Cantidad de zombies: " + this.getCantidadZombies() + "\n" + " Energía: " + this.getEnergiaPlanta()
+				+ " Cantidad de zombies: " + this.getCantidadZombies() + "\n" + " Energï¿½a: " + this.getEnergiaPlanta()
 				+ "\n " +
 
 				"Zombies:" + this.getZombies() + "\n " + "Girasoles: " + this.getGirasoles();
@@ -246,14 +195,6 @@ public class EstadoAmbiente extends EnvironmentState {
 	public void setCantidadZombies(Integer cantidadZombies) {
 		this.cantidadZombies = cantidadZombies;
 	}
-
-//	public Celda[][] getGrilla() {
-//		return grilla;
-//	}
-//
-//	public void setGrilla(Celda[][] grilla) {
-//		this.grilla = grilla;
-//	}
 
 	public Point getPosicionPlanta() {
 		return posicionPlanta;

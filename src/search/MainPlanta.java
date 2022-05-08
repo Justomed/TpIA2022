@@ -1,27 +1,19 @@
 package search;
 
-
 import frsf.cidisi.faia.simulator.SearchBasedAgentSimulator;
 
 public class MainPlanta {
-	
 
-public static void main(String[] args) {
-	
-	
-	
-	Planta planta = new Planta();
+    public static void main(String[] args) {
 
-    Ambiente ambiente = new Ambiente();
+        Planta planta = new Planta();
 
-    SearchBasedAgentSimulator simulador = new SearchBasedAgentSimulator(ambiente, planta);
-  
-    simulador.start();
-    
-}
-	
+        Ambiente ambiente = new Ambiente();
 
-     
- 
-      
+        SearchBasedAgentSimulator simulador = new SearchBasedAgentSimulator(ambiente, planta);
+
+        simulador.start();
+
+    }
+
 }

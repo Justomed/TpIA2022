@@ -1,5 +1,4 @@
 
-
 /*
  * Copyright 2007-2009 Georgina Stegmayer, Milagros Gutiérrez, Jorge Roa,
  * Luis Ignacio Larrateguy y Milton Pividori.
@@ -19,8 +18,8 @@
  */
 
 package search;
-import java.awt.Point;
 
+import java.awt.Point;
 import frsf.cidisi.faia.solver.search.IEstimatedCostFunction;
 import frsf.cidisi.faia.solver.search.NTree;
 
@@ -29,14 +28,11 @@ import frsf.cidisi.faia.solver.search.NTree;
  * informed search strategy, like A Star or Greedy.
  */
 
-
- 
 public class Heuristic implements IEstimatedCostFunction {
 
-	public Integer x=8;
-	public Integer y=4;
-	
-	
+    public Integer x = 8;
+    public Integer y = 4;
+
     /**
      * It returns the estimated cost to reach the goal from a NTree node.
      */
@@ -44,25 +40,22 @@ public class Heuristic implements IEstimatedCostFunction {
     public double getEstimatedCost(NTree node) {
         EstadoPlanta estado = (EstadoPlanta) node.getAgentState();
 
-    //QUE BUSQUE MATAR EL ZOMBIE QUE ESTE MAS CERCA DE LA CASA
-        if(estado.getZombies().size()>0) {
-        	
-        estado.getZombies().forEach((k,v)->{
-        	
-        	if(x>k.x) {
-        	x=k.x;
-        	y=k.y;	}
-        });
-        return  Point.distance(x, y, estado.getPosicion().x, estado.getPosicion().y) - 1;
+        // QUE BUSQUE MATAR EL ZOMBIE QUE ESTE MAS CERCA DE LA CASA
+        if (estado.getZombies().size() > 0) {
+
+            estado.getZombies().forEach((k, v) -> {
+
+                if (x > k.x) {
+                    x = k.x;
+                    y = k.y;
+                }
+            });
+            return Point.distance(x, y, estado.getPosicion().x, estado.getPosicion().y) - 1;
+        } else {
+
+            return 0;
+
         }
-        else {
-        	
-        	return 0;
-        	
-        }
-        
-        
-        
-  
+
     }
 }

@@ -9,16 +9,15 @@ public class ObjetivoPlanta extends GoalTest {
 
 	@Override
 	public boolean isGoalState(AgentState agentState) {
-		
-		EstadoPlanta planta= (EstadoPlanta) agentState;
-				
-	
-		if((planta.getPosicion().equals(planta.getObjAux()) 
-				&& planta.getZombies().isEmpty())// && planta.getGirasoles().size()>=5)
-				|| planta.getCantidadZombies()==0) {
+
+		EstadoPlanta planta = (EstadoPlanta) agentState;
+
+		if ((planta.getPosicion().equals(planta.getObjAux())
+				&& planta.getZombies().isEmpty())
+				|| planta.getCantidadZombies() == 0) {
 			return true;
 		}
-		
+
 		return false;
 	}
 
